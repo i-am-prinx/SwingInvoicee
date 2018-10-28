@@ -30,10 +30,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.List;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.UnitValue;
 import com.itextpdf.test.annotations.WrapToTest;
 import java.io.File;
 import java.io.IOException;
@@ -609,15 +614,115 @@ public class NewOrder {
 		
 		
 		
+		/*** Using ITEXT 7 ****/
 		String path = "invoice.pdf"; 
-		 
+		
+		
 		try {
 			pdf = new PdfDocument(new PdfWriter(path));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-        Document document = new Document(pdf);
-        document.add(new Paragraph("Hello World!"));
+        Document document = new Document(pdf, PageSize.A4.rotate());
+        document.setMargins(10, 10, 10, 10);
+        
+        
+        
+        Table table = new Table(new float[]{2, 3, 3, 5, 2, 3, 5, 2, 2, 1});
+		table.setWidth(UnitValue.createPercentValue(100));
+		
+		
+		table.addHeaderCell(new Cell().add(
+				new Paragraph("Sales ID")
+				));
+		
+		table.addHeaderCell(new Cell().add(
+				new Paragraph("Cus Name")
+				));
+		
+		table.addHeaderCell(new Cell().add(
+				new Paragraph("Cus Num")
+				));
+		
+		table.addHeaderCell(new Cell().add(
+				new Paragraph("Cus Add")
+				));
+		
+		
+		table.addHeaderCell(new Cell().add(
+				new Paragraph("Item ID")
+				));
+		
+		
+		table.addHeaderCell(new Cell().add(
+				new Paragraph("Item Cat")
+				));
+		
+		table.addHeaderCell(new Cell().add(
+				new Paragraph("Item Des")
+				));
+		
+		table.addHeaderCell(new Cell().add(
+				new Paragraph("Item Rate")
+				));
+		
+		table.addHeaderCell(new Cell().add(
+				new Paragraph("Item Qty")
+				));
+		
+		table.addHeaderCell(new Cell().add(
+				new Paragraph("Total Price")
+				));
+		
+		
+		
+		
+		table .addCell(new Cell().add(
+				new Paragraph(s_id + "")
+				));
+		
+		
+		table .addCell(new Cell().add(
+				new Paragraph(c_name)
+				));
+		
+		table .addCell(new Cell().add(
+				new Paragraph(c_num)
+				));
+		
+		table .addCell(new Cell().add(
+				new Paragraph(c_add)
+				));
+		
+		table .addCell(new Cell().add(
+				new Paragraph(i_id)
+				));
+		
+		table .addCell(new Cell().add(
+				new Paragraph(i_cat)
+				));
+		
+		table .addCell(new Cell().add(
+				new Paragraph(i_desc)
+				));
+		
+		table .addCell(new Cell().add(
+				new Paragraph(i_rate)
+				));
+		
+		table .addCell(new Cell().add(
+				new Paragraph(i_qty)
+				));
+		
+		table .addCell(new Cell().add(
+				new Paragraph(i_price)
+				));
+		
+		
+		
+		
+        document.add(new Paragraph("Invoice"));
+        document.add(table);
         document.close();
 	}
 	
